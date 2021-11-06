@@ -21,6 +21,7 @@ import {
       { name: User.name, schema: UserSchema },
       { name: RefreshToken.name, schema: RefreshTokenSchema },
     ]),
+
     UsersModule,
     PassportModule,
     JwtModule.registerAsync({
