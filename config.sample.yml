@@ -1,0 +1,36 @@
+app:
+  domain: 'localhost:3000'
+  api_domain: '',
+  media_domain: ''
+  name: 'WinCloud'
+  forgot_password_url: 'https://cms.dev.wincloud.comartek.com/auth/confirm/'
+
+http:
+  host: 'localhost'
+  port: 5001
+
+db:
+  main_mongodb:
+    uri: 'mongodb://localhost:27017/win-cloud'
+
+auth:
+  jwt:
+    secret: '466f2151-1129-44c6-ab1b-27d9c2ef8baf'
+    expires_in: '30d'
+    refresh_token_expires_in: '1d'
+
+caching:
+  redis:
+    host: 'localhost'
+    port: 6379
+    prefix: 'win-cloud'
+
+email:
+  driver: 'smtp'
+  host: 'smtp.gmail.com'
+  port: 587
+  username: 'test@comartek.vn'
+  password: 'thisistestemail'
+  encryption: 'tls'
+  fromAddress: 'test@comartek.vn'
+  fromName: 'WinCloud'

@@ -1,0 +1,26 @@
+{
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "apps/api/src",
+    "projects": {
+        "graphql": {
+            "type": "library",
+            "root": "libs/graphql",
+            "entryFile": "index",
+            "sourceRoot": "libs/graphql/src",
+            "compilerOptions": {
+                "tsConfigPath": "libs/graphql/tsconfig.lib.json"
+            }
+        },
+        "configuration": {
+            "type": "library",
+            "root": "libs/configuration",
+            "entryFile": "index",
+            "sourceRoot": "libs/configuration/src",
+            "compilerOptions": {
+                "tsConfigPath": "libs/configuration/tsconfig.lib.json"
+            }
+        }
+    },
+    "monorepo": true,
+    "root": "apps/api"
+}

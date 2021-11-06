@@ -1,0 +1,44 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Jwt {
+  expiresAt: Int!
+  payload: User!
+  refreshToken: String!
+  refreshTokenExpiresAt: Int!
+  role: ROLES!
+  token: String!
+}
+
+input LoginInput {
+  password: String!
+  username: String!
+}
+
+type Mutation {
+  login(input: LoginInput!): Jwt!
+}
+
+type Query {
+  me: User!
+}
+
+enum ROLES {
+  ADMIN
+  CTV
+  SUPER_ADMIN
+}
+
+type User {
+  _id: ID!
+  address: String
+  createdAt: Float
+  deletedAt: Float
+  deletedBy: ID
+  password: String!
+  phone: String!
+  role: ROLES!
+  updatedAt: Float
+  username: String!
+}
