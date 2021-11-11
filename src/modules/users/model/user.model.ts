@@ -27,7 +27,7 @@ export class User {
   password: string;
 
   @Field(() => ROLES, { defaultValue: ROLES.ADMIN })
-  @Prop()
+  @Prop(() => ROLES)
   role: ROLES;
 
   @Prop({ type: MongoSchema.Types.Number })

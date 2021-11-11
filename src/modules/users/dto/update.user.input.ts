@@ -1,9 +1,12 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, MinLength } from 'class-validator';
+import { Field, ID, InputType } from '@nestjs/graphql';
+import { IsNotEmpty } from 'class-validator';
 import { ROLES } from '../types/user';
 
 @InputType()
-export class CreateUserInput {
+export class UpdateUserInput {
+  @Field(() => ID)
+  _id: string;
+
   @IsNotEmpty({
     message: 'Username is not empty',
   })
@@ -21,13 +24,4 @@ export class CreateUserInput {
 
   @Field(() => ROLES, { nullable: true })
   role: ROLES;
-
-  @IsNotEmpty({
-    message: 'Password is not empty',
-  })
-  @MinLength(6, {
-    message: 'Password at least 6 characters',
-  })
-  @Field({ nullable: false })
-  password: string;
 }

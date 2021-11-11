@@ -1,13 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ConfigurationService } from 'src/config/configuration.service';
 import { responseData } from 'src/helpers/data';
 import { COMMON_ERRORS } from 'src/types/message';
 import { PaginatedUser, User, UserDocument } from '../users/model/user.model';
 import { CreateUserInput } from './dto/create.user.input';
 import { GetUsersInput } from './dto/get.users.input';
+import { UpdateUserInput } from './dto/update.user.input';
 import { ROLES } from './types/user';
 
 @Injectable()
@@ -70,5 +71,18 @@ export class UsersService {
   async me(id: string): Promise<User> {
     const meInfo = await this.userModel.findOne({ _id: id }).lean().exec();
     return meInfo;
+  }
+
+  async updateUser(input: UpdateUserInput) {
+    const update = await this.userModel.findOneAndUpdate(
+      {
+        _id: new Types.ObjectId(input._id),
+      },
+      {
+        ...input,
+      },
+      { new: true },
+    );
+    return update;
   }
 }

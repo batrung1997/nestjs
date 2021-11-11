@@ -6,6 +6,7 @@ import { AdminRolesGuard } from '../auth/roles.guard';
 import { AccessTokenJwtData } from '../auth/types/jwt';
 import { CreateUserInput } from './dto/create.user.input';
 import { GetUsersInput } from './dto/get.users.input';
+import { UpdateUserInput } from './dto/update.user.input';
 import { PaginatedUser, User } from './model/user.model';
 import { UsersService } from './users.service';
 
@@ -31,5 +32,14 @@ export class UsersResolver {
     @Args('createUserInput') createUserInput: CreateUserInput,
   ) {
     return this.userService.createUser(createUserInput);
+  }
+
+  @UseGuards(AdminRolesGuard)
+  @Mutation(() => User)
+  updateUser(
+    @CurrentUser() req: AccessTokenJwtData,
+    @Args('input') input: UpdateUserInput,
+  ) {
+    return this.userService.updateUser(input);
   }
 }

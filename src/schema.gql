@@ -34,6 +34,7 @@ input LoginInput {
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   login(input: LoginInput!): Jwt!
+  updateUser(input: UpdateUserInput!): User!
 }
 
 type PaginatedUser {
@@ -52,6 +53,14 @@ enum ROLES {
   ADMIN
   CTV
   SUPER_ADMIN
+}
+
+input UpdateUserInput {
+  _id: ID!
+  address: String
+  phone: String!
+  role: ROLES
+  username: String!
 }
 
 type User {
