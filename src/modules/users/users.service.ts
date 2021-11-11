@@ -8,6 +8,7 @@ import { COMMON_ERRORS } from 'src/types/message';
 import { PaginatedUser, User, UserDocument } from '../users/model/user.model';
 import { CreateUserInput } from './dto/create.user.input';
 import { GetUsersInput } from './dto/get.users.input';
+import { ROLES } from './types/user';
 
 @Injectable()
 export class UsersService {
@@ -41,6 +42,7 @@ export class UsersService {
     const data = {
       ...input,
       password: passwordHash,
+      role: input.role ? input.role : ROLES.CTV,
     };
     const req = await this.userModel.create(data);
     return req;
@@ -63,5 +65,10 @@ export class UsersService {
       input.page,
       Math.ceil(total / input.limit),
     );
+  }
+
+  async me(id: string): Promise<User> {
+    const meInfo = await this.userModel.findOne({ _id: id }).lean().exec();
+    return meInfo;
   }
 }

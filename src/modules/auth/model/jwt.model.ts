@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { User } from 'src/modules/users/model/user.model';
 import { ROLES } from 'src/modules/users/types/user';
 
@@ -13,12 +13,12 @@ export class Jwt {
   @Field({ nullable: false })
   refreshToken: string;
 
-  @Field(() => Int)
+  @Field(() => Float)
   expiresAt: number;
 
-  @Field(() => Int, {})
+  @Field(() => Float)
   refreshTokenExpiresAt: number;
 
-  @Field(() => User, {})
+  @Field(() => User)
   payload: User;
 }

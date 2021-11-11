@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty, MinLength } from 'class-validator';
+import { ROLES } from '../types/user';
 
 @InputType()
 export class CreateUserInput {
@@ -17,6 +18,9 @@ export class CreateUserInput {
 
   @Field({ nullable: true })
   address: string;
+
+  @Field(() => ROLES, { nullable: true })
+  role: ROLES;
 
   @IsNotEmpty({
     message: 'Phone is not empty',

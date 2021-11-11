@@ -1,14 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
-import moment from 'moment';
+import * as bcrypt from 'bcrypt';
+import * as moment from 'moment';
 import { Model } from 'mongoose';
+import { ConfigurationService } from 'src/config/configuration.service';
 import { User, UserDocument } from '../users/model/user.model';
 import {
   RefreshToken,
   RefreshTokenDocument,
 } from './schema/refresh.token.schema';
 import { AccessTokenJwtData } from './types/jwt';
+const ms = require('ms');
 
 @Injectable()
 export class AuthService {
@@ -20,16 +23,17 @@ export class AuthService {
     @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>,
     private jwtService: JwtService,
+    private readonly configrationService: ConfigurationService,
   ) {}
 
   async validateUser(phone: string, pass: string) {
-    const user = await this.userModel
-      .findOne({ phone, password: pass })
-      .lean()
-      .exec();
-    if (!user) {
+    const user = await this.userModel.findOne({ phone }).lean().exec();
+    const isMatch = await bcrypt.compare(pass, user?.password || '');
+
+    if (!user && !isMatch) {
       throw new UnauthorizedException();
     }
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // const { password, ...result } = user;
     return user;
@@ -56,8 +60,9 @@ export class AuthService {
       userId,
       ipAddress,
       clientId,
-      expiresAt: moment().add(this.refreshTokenTTL, 's').toDate(),
+      expiresAt: moment().utc().toDate(),
     });
+
     return newRefreshToken;
   }
 
@@ -66,10 +71,12 @@ export class AuthService {
     const accessToken = await this.makeAccessToken(user);
     const refreshToken = await this.createRefreshToken(user._id, '', '');
     return {
-      expiresAt: moment().unix(),
+      expiresAt:
+        moment().utc().valueOf() +
+        ms(this.configrationService.get().auth.jwt.expires_in),
       payload: user,
       refreshToken: refreshToken._id.toString(),
-      refreshTokenExpiresAt: moment().unix(),
+      refreshTokenExpiresAt: moment().millisecond(),
       role: user.role,
       token: accessToken,
     };

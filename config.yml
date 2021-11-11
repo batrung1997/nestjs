@@ -15,7 +15,7 @@ db:
 auth:
   jwt:
     secret: '466f2151-1129-44c6-ab1b-27d9c2ef8baf'
-    expires_in: '30d'
+    expires_in: '30m'
     refresh_token_expires_in: '1d'
 
 password:

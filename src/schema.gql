@@ -6,6 +6,7 @@ input CreateUserInput {
   address: String
   password: String!
   phone: String!
+  role: ROLES
   username: String!
 }
 
@@ -17,17 +18,17 @@ input GetUsersInput {
 }
 
 type Jwt {
-  expiresAt: Int!
+  expiresAt: Float!
   payload: User!
   refreshToken: String!
-  refreshTokenExpiresAt: Int!
+  refreshTokenExpiresAt: Float!
   role: ROLES!
   token: String!
 }
 
 input LoginInput {
   password: String!
-  username: String!
+  phone: String!
 }
 
 type Mutation {
