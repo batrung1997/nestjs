@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateUserInput {
+  address: String
+  password: String!
+  phone: String!
+  username: String!
+}
+
+input GetUsersInput {
+  limit: Float!
+  offset: Float
+  page: Float!
+  username: String
+}
+
 type Jwt {
   expiresAt: Int!
   payload: User!
@@ -17,10 +31,19 @@ input LoginInput {
 }
 
 type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
   login(input: LoginInput!): Jwt!
 }
 
+type PaginatedUser {
+  currentPage: Int!
+  items: [User!]
+  total: Int!
+  totalPage: Int
+}
+
 type Query {
+  getUsers(input: GetUsersInput!): PaginatedUser!
   me: User!
 }
 

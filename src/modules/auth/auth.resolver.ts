@@ -9,6 +9,10 @@ export class AuthResolver {
 
   @Mutation(() => Jwt)
   async login(@Args('input') loginInput: LoginInput) {
-    return this.authService.login(loginInput.username, loginInput.password);
+    const res = await this.authService.login(
+      loginInput.username,
+      loginInput.password,
+    );
+    return res;
   }
 }

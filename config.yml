@@ -18,6 +18,9 @@ auth:
     expires_in: '30d'
     refresh_token_expires_in: '1d'
 
+password:
+  saltOrRounds: 15
+
 caching:
   redis:
     host: 'localhost'

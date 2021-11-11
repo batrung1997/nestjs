@@ -9,6 +9,8 @@ export class ConfigurationService {
   get(): ConfigurationType {
     const app = this.configService.get<ConfigurationType['app']>('app');
     const db = this.configService.get<ConfigurationType['db']>('db');
+    const password =
+      this.configService.get<ConfigurationType['password']>('password');
     const http = this.configService.get<ConfigurationType['http']>('http');
     const caching =
       this.configService.get<ConfigurationType['caching']>('caching');
@@ -19,6 +21,7 @@ export class ConfigurationService {
       caching,
       http,
       db,
+      password,
     };
   }
 }

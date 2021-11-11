@@ -30,6 +30,10 @@ export interface ConfigurationType {
     };
   };
 
+  password: {
+    saltOrRounds: number;
+  };
+
   caching: {
     redis: {
       prefix: string;

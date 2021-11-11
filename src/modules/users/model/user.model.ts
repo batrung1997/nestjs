@@ -1,6 +1,7 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongoSchema } from 'mongoose';
+import { Paginated } from 'src/types/query';
 import { ROLES } from '../types/user';
 
 @Schema()
@@ -49,3 +50,6 @@ export class User {
 export type UserDocument = User & Document;
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+@ObjectType()
+export class PaginatedUser extends Paginated(User) {}
