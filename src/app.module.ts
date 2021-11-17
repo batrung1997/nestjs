@@ -15,6 +15,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { FilesModule } from './modules/files/files.module';
 import { QueuesModule } from './modules/queues/queues.module';
 import { SchedulesModule } from './modules/schedules/schedules.module';
+import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -46,6 +47,9 @@ import { UsersModule } from './modules/users/users.module';
           installSubscriptionHandlers: true,
           subscriptions: {
             'graphql-ws': true,
+            'subscriptions-transport-ws': {
+              path: '/graphql',
+            },
           },
           debug: true,
           tracing: true,
@@ -69,6 +73,7 @@ import { UsersModule } from './modules/users/users.module';
     }),
     ScheduleModule.forRoot(),
     SchedulesModule,
+    SubscriptionsModule,
     PassportModule,
     AuthModule,
     FilesModule,

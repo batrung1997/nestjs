@@ -67,6 +67,10 @@ enum ROLES {
   SUPER_ADMIN
 }
 
+type Subscription {
+  userCreated: User!
+}
+
 input UpdateUserInput {
   _id: ID!
   address: String

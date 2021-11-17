@@ -5,6 +5,7 @@ import { Model, Types } from 'mongoose';
 import { ConfigurationService } from 'src/config/configuration.service';
 import { responseData } from 'src/helpers/data';
 import { COMMON_ERRORS } from 'src/types/message';
+import { PubsubService } from '../pubsub/pubsub.service';
 import { PaginatedUser, User, UserDocument } from '../users/model/user.model';
 import { CreateUserInput } from './dto/create.user.input';
 import { GetUsersInput } from './dto/get.users.input';
@@ -17,6 +18,7 @@ export class UsersService {
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
     private readonly configrationService: ConfigurationService,
+    private pubsubService: PubsubService,
   ) {}
 
   async checkPhone(phone: string) {
@@ -46,6 +48,11 @@ export class UsersService {
       role: input.role ? input.role : ROLES.CTV,
     };
     const req = await this.userModel.create(data);
+    if (req) {
+      this.pubsubService.pubsub.publish('userCreated', {
+        userCreated: req,
+      });
+    }
     return req;
   }
 
