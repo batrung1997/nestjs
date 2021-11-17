@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
+import { ScheduleModule } from '@nestjs/schedule';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { join } from 'path';
 import { AppController } from './app.controller';
@@ -13,6 +14,7 @@ import { ConfigurationService } from './config/configuration.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { FilesModule } from './modules/files/files.module';
 import { QueuesModule } from './modules/queues/queues.module';
+import { SchedulesModule } from './modules/schedules/schedules.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -42,7 +44,9 @@ import { UsersModule } from './modules/users/users.module';
               : { req },
           uploads: false,
           installSubscriptionHandlers: true,
-          'graphql-ws': true,
+          subscriptions: {
+            'graphql-ws': true,
+          },
           debug: true,
           tracing: true,
           playground: true,
@@ -63,6 +67,8 @@ import { UsersModule } from './modules/users/users.module';
       }),
       inject: [ConfigurationService],
     }),
+    ScheduleModule.forRoot(),
+    SchedulesModule,
     PassportModule,
     AuthModule,
     FilesModule,
