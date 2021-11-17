@@ -1,0 +1,24 @@
+type Queue {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateQueueInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateQueueInput {
+  id: Int!
+}
+
+type Query {
+  queues: [Queue]!
+  queue(id: Int!): Queue
+}
+
+type Mutation {
+  createQueue(createQueueInput: CreateQueueInput!): Queue!
+  updateQueue(updateQueueInput: UpdateQueueInput!): Queue!
+  removeQueue(id: Int!): Queue
+}

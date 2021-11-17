@@ -10,6 +10,15 @@ input CreateUserInput {
   username: String!
 }
 
+type File {
+  _id: ID
+  createdAt: Float!
+  mimetype: String
+  name: String
+  thumbnail: String
+  url: String!
+}
+
 input GetUsersInput {
   limit: Float!
   offset: Float
@@ -33,8 +42,11 @@ input LoginInput {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  deleteFile(id: String!): Boolean!
   login(input: LoginInput!): Jwt!
+  testUploadQueue: Boolean!
   updateUser(input: UpdateUserInput!): User!
+  uploadFile(file: Upload!): File!
 }
 
 type PaginatedUser {
@@ -62,6 +74,9 @@ input UpdateUserInput {
   role: ROLES
   username: String!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   _id: ID!
