@@ -1,0 +1,5 @@
+const USER_CREATED_SUBSCRIPTION = 'USER_CREATED_SUBSCRIPTION';
+
+export const SubscriptionName = {
+  userCreated: USER_CREATED_SUBSCRIPTION,
+};

@@ -6,6 +6,7 @@ import { ConfigurationService } from 'src/config/configuration.service';
 import { responseData } from 'src/helpers/data';
 import { COMMON_ERRORS } from 'src/types/message';
 import { PubsubService } from '../pubsub/pubsub.service';
+import { SubscriptionName } from '../subscriptions/type';
 import { PaginatedUser, User, UserDocument } from '../users/model/user.model';
 import { CreateUserInput } from './dto/create.user.input';
 import { GetUsersInput } from './dto/get.users.input';
@@ -49,7 +50,7 @@ export class UsersService {
     };
     const req = await this.userModel.create(data);
     if (req) {
-      this.pubsubService.pubsub.publish('userCreated', {
+      this.pubsubService.pubsub.publish(SubscriptionName.userCreated, {
         userCreated: req,
       });
     }

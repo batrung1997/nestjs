@@ -2,6 +2,7 @@ import { Resolver, Subscription } from '@nestjs/graphql';
 import { PubsubService } from '../pubsub/pubsub.service';
 import { User } from '../users/model/user.model';
 import { SubscriptionsService } from './subscriptions.service';
+import { SubscriptionName } from './type';
 
 @Resolver()
 export class SubscriptionsResolver {
@@ -12,6 +13,8 @@ export class SubscriptionsResolver {
 
   @Subscription(() => User)
   userCreated() {
-    return this.pubsubService.pubsub.asyncIterator('userCreated');
+    return this.pubsubService.pubsub.asyncIterator(
+      SubscriptionName.userCreated,
+    );
   }
 }
